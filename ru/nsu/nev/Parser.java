@@ -131,7 +131,7 @@ public class Parser {
                         }
                     }
                 }
-                // Primitive handler
+                // Primitive onRead
                 if (primitive != null) {
                     new_state = TOKEN_TYPE.PRIMITIVE;
                     objects.add(primitive);
@@ -206,12 +206,17 @@ public class Parser {
             System.exit(1);
         }
         line = line.replaceAll("([_\\W])", " $1 ");
-        words =  line.trim().split("\\s+");
-        currentWord = 0;
+        line = line.trim();
+        if (line.isEmpty())
+            newLine();
+        else {
+            words = line.split("\\s+");
+            currentWord = 0;
+        }
     }
 
     private static String getNextWord(){
-        while (currentWord == words.length)
+        if (currentWord == words.length)
             newLine();
         return words[currentWord++];
     }

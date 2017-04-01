@@ -23,18 +23,21 @@ public class FunctionalBlock {
         isImmediatelyExecute = immediately;
     }
 
-    public void execute () throws LogicError, SyntaxError {
-        if (!isImmediatelyExecute)
-            for (Command c : commands){
-                c.drawer();
-            }
+    public void execute () throws LogicalError, SyntaxError {
+        for (Command c : commands) {
+            c.onExecute();
+        }
+        variables = new ArrayList<>();
     }
 
     public void addCommand (Command cmd){
         commands.add(cmd);
     }
 
-    public void addVariable (Variable var){
+    public void addVariable (Variable var) throws LogicalError {
+        for (Variable v : variables)
+            if (v.getName().equals(var.getName()))
+                throw new LogicalError("variable \"" +var.getValue() + "\" already exists");
         variables.add(var);
     }
 

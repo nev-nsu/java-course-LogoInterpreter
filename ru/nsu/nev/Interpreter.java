@@ -1,11 +1,10 @@
 package ru.nsu.nev;
 
-import ru.nsu.nev.program.LogicError;
+import ru.nsu.nev.program.LogicalError;
 import ru.nsu.nev.program.SyntaxError;
 import ru.nsu.nev.program.commands.Command;
 import ru.nsu.nev.program.FunctionalBlock;
 import ru.nsu.nev.program.commands.CommandsFactory;
-import ru.nsu.nev.program.operators.OperatorsFactory;
 
 import java.io.*;
 
@@ -37,7 +36,7 @@ public class Interpreter {
         CommandsFactory.init("resources/conf.ini");
     }
 
-    public static void main(String[] args) throws SyntaxError, LogicError {
+    public static void main(String[] args) throws SyntaxError, LogicalError {
 	    if (args.length != 1)
         {
             // TODO log
@@ -49,19 +48,18 @@ public class Interpreter {
         readFunctionalBlock(mainBlock);
     }
 
-    static void readFunctionalBlock(FunctionalBlock block) throws SyntaxError, LogicError {
+    static public void readFunctionalBlock(FunctionalBlock block) throws SyntaxError, LogicalError {
         while (!block.isFinished) {
             Command cmd = Parser.getCommand();
             if (cmd == null) {
                 continue;
             }
-            cmd.handler(block);
+            cmd.onRead(block);
             if (block.isImmediatelyExecute)
-                cmd.drawer();
+                cmd.onExecute();
             else
                 block.addCommand(cmd);
         }
-        block.execute();
     }
 
 }

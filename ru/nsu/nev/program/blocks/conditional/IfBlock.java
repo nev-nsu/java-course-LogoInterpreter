@@ -2,7 +2,7 @@ package ru.nsu.nev.program.blocks.conditional;
 
 import ru.nsu.nev.program.Expression;
 import ru.nsu.nev.program.FunctionalBlock;
-import ru.nsu.nev.program.LogicError;
+import ru.nsu.nev.program.LogicalError;
 import ru.nsu.nev.program.SyntaxError;
 
 public class IfBlock extends FunctionalBlock{
@@ -12,13 +12,13 @@ public class IfBlock extends FunctionalBlock{
         condition = ncondition;
     }
 
-    public IfBlock (Boolean immediately, FunctionalBlock nparent, Expression ncondition){
-        super(immediately, nparent);
+    public IfBlock (FunctionalBlock nparent, Expression ncondition){
+        super(false, nparent);
         condition = ncondition;
     }
 
     @Override
-    public void execute () throws LogicError, SyntaxError {
+    public void execute () throws LogicalError, SyntaxError {
         // TODO : if (condition == null)
         if (condition.calculate() != 0)
             super.execute();

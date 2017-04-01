@@ -1,2 +1,14 @@
 init 100, 10, 50, 5
+draw
+define d
+set d 8
+while (d) {
+    if (d - 2*(d/2))
+        {
+            move U 1
+            move D 1
+        }
+    move R 1
+    set d d - 1
+}
 exit

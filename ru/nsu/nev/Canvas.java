@@ -1,20 +1,23 @@
 package ru.nsu.nev;
 
-import ru.nsu.nev.program.LogicError;
+import ru.nsu.nev.program.LogicalError;
 
 public class Canvas {
 
 
-    private char freeSpace = ' ';
+    public final char freeSpace = ' ';
 
     private char[][] map = null;
-    private int width = 152;
-    private int height = 22;
+    private int width = 402;
+    private int height = 26;
     private final int maxWidth = width - 2;
     private int minWidth = 1;
     private final int  maxHeight = height - 2;
     private int minHeight = 1;
 
+
+    public int getWidth (){return width-2;}
+    public int getHeight (){return height-2;}
 
     public Canvas (){
         map = new char[height][width];
@@ -28,10 +31,10 @@ public class Canvas {
         minHeight = y;
     }
 
-    public void setSize (int nwidth, int nheight) throws LogicError {
+    public void setSize (int nwidth, int nheight) throws LogicalError {
         if (nwidth > maxWidth || nheight > maxHeight
          || nwidth < minWidth || nheight < minHeight)
-            throw new LogicError ("invalid field size");
+            throw new LogicalError("invalid field size");
         // clean the border
         for (int i = 0; i < height; i++) {
             map[i][0] = freeSpace;
@@ -63,27 +66,10 @@ public class Canvas {
         }
     }
 
-    public void drawPoint (int y, int x) throws LogicError {
-        char ch = '@';
+    public void drawPoint (int y, int x, char ch) throws LogicalError {
         if (x < 0 || y < 0 || x >= height - 2 || y >= width - 2)
-            throw new LogicError("overstepping");
+            throw new LogicalError("overstepping");
         map[x+1][y+1] = ch;
-    }
-
-
-    public void drawLine (int x1, int y1, int x2, int y2) throws LogicError{
-        char ch = '*';
-        if (y1 == y2)
-            for (int i = x1; i != x2; i++){
-                i = i % (width-2);
-                map[i+1][y2+1] = ch;
-            }
-        else if (x1 == x2)
-            for (int i = y1; i != y2; i++){
-                i = i % (height-2);
-                map[x2+1][i+1] = ch;
-            }
-        else throw new LogicError ("only straight lines allowed");
     }
 
     public void show(){
