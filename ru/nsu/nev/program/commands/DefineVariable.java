@@ -9,7 +9,7 @@ import ru.nsu.nev.program.Variable;
 
 public class DefineVariable implements Command {
 
-    String variableName;
+    private String variableName;
 
     @Override
     public void onRead(FunctionalBlock placement) throws SyntaxError {
@@ -20,7 +20,7 @@ public class DefineVariable implements Command {
 
     @Override
     public void onExecute() throws LogicalError, SyntaxError {
-        FunctionalBlock block = Interpreter.getMainBlock();
+        FunctionalBlock block = Interpreter.mainBlock;
         block.addVariable(new Variable(variableName));
     }
 }

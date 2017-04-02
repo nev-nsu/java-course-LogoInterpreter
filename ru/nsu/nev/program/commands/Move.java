@@ -26,20 +26,19 @@ public class Move implements Command {
 
     @Override
     public void onExecute() throws LogicalError, SyntaxError {
-        FunctionalBlock block = Interpreter.getMainBlock();
-        Canvas canvas = Interpreter.getMainCanvas();
+        FunctionalBlock block = Interpreter.mainBlock;
         if (block.getVariableValue("__initialized__") == null)
             throw new LogicalError("field isn't initialized");
         int X = block.getVariableValue("__x_position__");
         int Y = block.getVariableValue("__y_position__");
         int i = offset.calculate();
-        int x_limit = canvas.getWidth() - 1;
-        int y_limit = canvas.getHeight() - 1;
+        int x_limit = Canvas.getWidth() - 1;
+        int y_limit = Canvas.getHeight() - 1;
         boolean draw_mode = block.getVariableValue("__draw_mode__") == 1;
-        canvas.drawPoint(X, Y, canvas.freeSpace);
+        Canvas.drawPoint(X, Y, Canvas.freeSpace);
         while (i > 0){
             i--;
-            if (draw_mode) canvas.drawPoint(X, Y, '*');
+            if (draw_mode) Canvas.drawPoint(X, Y, '*');
             switch (direction) {
                 case 'L':
                     X--;
@@ -63,7 +62,7 @@ public class Move implements Command {
                     break;
             }
         }
-        canvas.drawPoint(X, Y, '@');
+        Canvas.drawPoint(X, Y, '@');
         block.setVariableValue("__x_position__", X);
         block.setVariableValue("__y_position__", Y);
     }

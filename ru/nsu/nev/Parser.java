@@ -14,7 +14,9 @@ import ru.nsu.nev.program.primitives.Primitive;
 import ru.nsu.nev.program.primitives.Variable;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.Stack;
@@ -30,8 +32,14 @@ public class Parser {
     private static String[] words;
     private static int currentWord;
 
-    public static void init (BufferedReader in){
-        input = in;
+    public static void init(String inputFileName) {
+        try {
+            input = new BufferedReader(new InputStreamReader(new FileInputStream(inputFileName), "UTF-8"));
+        } catch (Exception e) {
+            Interpreter.logger.error("IO error");
+            e.printStackTrace();
+            System.exit(0);
+        }
         newLine();
     }
 
@@ -170,8 +178,10 @@ public class Parser {
                 return null;
             }
         }
-        // it's gonna be okay
-        catch (Exception e){}
+        catch (Exception e){
+            Interpreter.logger.fatal("internal error");
+            System.exit(1);
+        }
         String word = getNextWord();
         for (int i = 0; i < word.length(); i++)
             if (!Character.isLetter(word.codePointAt(i))) {
@@ -201,9 +211,9 @@ public class Parser {
             numberOfLine++;
             line = input.readLine();
         } catch (IOException e) {
+            Interpreter.logger.error("IO error");
             e.printStackTrace();
-            // TODO: logging
-            System.exit(1);
+            System.exit(0);
         }
         line = line.replaceAll("([_\\W])", " $1 ");
         line = line.trim();

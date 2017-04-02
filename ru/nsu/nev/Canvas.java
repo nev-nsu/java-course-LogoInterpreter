@@ -5,33 +5,33 @@ import ru.nsu.nev.program.LogicalError;
 public class Canvas {
 
 
-    public final char freeSpace = ' ';
+    public static final char freeSpace = ' ';
 
-    private char[][] map = null;
-    private int width = 402;
-    private int height = 26;
-    private final int maxWidth = width - 2;
-    private int minWidth = 1;
-    private final int  maxHeight = height - 2;
-    private int minHeight = 1;
+    private static char[][] map = null;
+    private static int width = 402;
+    private static int height = 26;
+    private static final int maxWidth = width - 2;
+    private static int minWidth = 1;
+    private static final int  maxHeight = height - 2;
+    private static int minHeight = 1;
 
 
-    public int getWidth (){return width-2;}
-    public int getHeight (){return height-2;}
+    public static int getWidth (){return width-2;}
+    public static int getHeight (){return height-2;}
 
-    public Canvas (){
+    static {
         map = new char[height][width];
         for (int i = 0; i < height; i++)
             for (int j = 0; j < width; j++)
                 map[i][j] = freeSpace;
     }
 
-    public void setMinSize (int x, int y){
+    public static void setMinSize (int x, int y){
         minWidth = x;
         minHeight = y;
     }
 
-    public void setSize (int nwidth, int nheight) throws LogicalError {
+    public static void setSize (int nwidth, int nheight) throws LogicalError {
         if (nwidth > maxWidth || nheight > maxHeight
          || nwidth < minWidth || nheight < minHeight)
             throw new LogicalError("invalid field size");
@@ -66,13 +66,13 @@ public class Canvas {
         }
     }
 
-    public void drawPoint (int y, int x, char ch) throws LogicalError {
+    public static void drawPoint (int y, int x, char ch) throws LogicalError {
         if (x < 0 || y < 0 || x >= height - 2 || y >= width - 2)
             throw new LogicalError("overstepping");
         map[x+1][y+1] = ch;
     }
 
-    public void show(){
+    public static void show(){
         for(int i = 0; i < height; i++)
             System.out.println (String.valueOf(map[i]));
     }

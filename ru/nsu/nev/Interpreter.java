@@ -1,5 +1,7 @@
 package ru.nsu.nev;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import ru.nsu.nev.program.LogicalError;
 import ru.nsu.nev.program.SyntaxError;
 import ru.nsu.nev.program.commands.Command;
@@ -7,44 +9,41 @@ import ru.nsu.nev.program.FunctionalBlock;
 import ru.nsu.nev.program.commands.CommandsFactory;
 
 import java.io.*;
+import java.util.Properties;
+
+import static java.lang.ClassLoader.getSystemClassLoader;
 
 
 public class Interpreter {
 
-    private static FunctionalBlock mainBlock;
-    public static FunctionalBlock getMainBlock () {
-        return mainBlock;
-    }
+    public static final FunctionalBlock mainBlock = new FunctionalBlock(true);
 
-    private static Canvas mainCanvas;
-    public static Canvas getMainCanvas () {
-        return mainCanvas;
-    }
+    public static final Logger logger = Logger.getLogger(Interpreter.class);
 
-    private static void init(String inputFileName){
-        try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(inputFileName), "UTF-8"));
-            Parser.init(in);
-        }
-        catch (Exception e)
-        {
+    private static void loggerInit(String inputFileName) {
+        Properties p = new Properties();
+        try (InputStream input = getSystemClassLoader().getResourceAsStream(inputFileName)) {
+            p.load(input);
+            PropertyConfigurator.configure(p);
+        } catch (IOException e) {
+            System.err.println("Logger wasn't configured: IO error");
             e.printStackTrace();
-            System.exit(0);
-            // TODO log
         }
-        mainCanvas = new Canvas();
-        CommandsFactory.init("resources/conf.ini");
     }
 
     public static void main(String[] args) throws SyntaxError, LogicalError {
-	    if (args.length != 1)
-        {
-            // TODO log
-            System.out.println("Help need be here");
+        loggerInit("resources/logger.properties");
+        logger.info("PROGRAM STARTED");
+
+        if (args.length != 1) {
+            logger.error("wrong number of arguments: " + args.length);
+            System.out.println("Usage: interpreter FILENAME");
+            System.exit(0);
         }
-        init (args[0]);
-        // create block
-        mainBlock = new FunctionalBlock(true);
+        Parser.init(args[0]);
+
+        CommandsFactory.init("resources/commands.properties");
+        logger.info("EXECUTION STARTED");
         readFunctionalBlock(mainBlock);
     }
 

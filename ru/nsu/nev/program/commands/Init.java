@@ -26,8 +26,7 @@ public class Init implements Command {
 
     @Override
     public void onExecute() throws SyntaxError, LogicalError {
-        FunctionalBlock block = Interpreter.getMainBlock();
-        Canvas canvas = Interpreter.getMainCanvas();
+        FunctionalBlock block = Interpreter.mainBlock;
         int X = x.calculate();
         int Y = y.calculate();
         if (block.getVariableValue("__initialized__") == null) {
@@ -36,11 +35,11 @@ public class Init implements Command {
             block.addVariable(new Variable("__x_position__"));
             block.addVariable(new Variable("__y_position__"));
         }
-        canvas.setSize(width.calculate(), height.calculate());
-        canvas.setMinSize(X + 1, Y + 1);
+        Canvas.setSize(width.calculate(), height.calculate());
+        Canvas.setMinSize(X + 1, Y + 1);
         block.setVariableValue("__x_position__", X);
         block.setVariableValue("__y_position__", Y);
-        canvas.drawPoint(X, Y, '@');
+        Canvas.drawPoint(X, Y, '@');
     }
 
 }

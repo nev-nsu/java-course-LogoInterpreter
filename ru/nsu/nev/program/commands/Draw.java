@@ -12,8 +12,8 @@ public class Draw implements Command{
 
     @Override
     public void onExecute() throws LogicalError, SyntaxError {
-        if (Interpreter.getMainBlock().getVariableValue("__initialized__") == null)
+        if (Interpreter.mainBlock.getVariableValue("__initialized__") == null)
             throw new LogicalError("field isn't initialized");
-        Interpreter.getMainBlock().setVariableValue("__draw_mode__", 1);
+        Interpreter.mainBlock.setVariableValue("__draw_mode__", 1);
     }
 }

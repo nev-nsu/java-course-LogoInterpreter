@@ -1,5 +1,6 @@
 package ru.nsu.nev.program;
 
+import ru.nsu.nev.Interpreter;
 import ru.nsu.nev.program.commands.Command;
 
 import java.util.ArrayList;

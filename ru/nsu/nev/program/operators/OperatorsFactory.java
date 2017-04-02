@@ -1,6 +1,8 @@
 package ru.nsu.nev.program.operators;
 
 
+import ru.nsu.nev.Interpreter;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +16,7 @@ public class OperatorsFactory {
             put("-", Substruction.class);
             put("*", Multiplication.class);
             put("/", Division.class);
+            Interpreter.logger.info ("operators factory has been initialized");
         }
     };
 

@@ -19,7 +19,7 @@ public class Assignment implements Command {
 
     @Override
     public void onExecute() throws LogicalError, SyntaxError {
-        FunctionalBlock block = Interpreter.getMainBlock();
+        FunctionalBlock block = Interpreter.mainBlock;
         if (block.getVariableValue(variableName) == null)
             throw new LogicalError("variable name was expected");
         block.setVariableValue(variableName, newValue.calculate());

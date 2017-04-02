@@ -21,8 +21,7 @@ public class Teleport implements Command {
 
     @Override
     public void onExecute() throws LogicalError, SyntaxError {
-        FunctionalBlock block = Interpreter.getMainBlock();
-        Canvas canvas = Interpreter.getMainCanvas();
+        FunctionalBlock block = Interpreter.mainBlock;
         if (block.getVariableValue("__initialized__") == null)
             throw new LogicalError("field isn't initialized");
         int newX = X.calculate();
@@ -31,7 +30,7 @@ public class Teleport implements Command {
         int oldY = block.getVariableValue("__y_position__");
         block.setVariableValue("__x_position__", newX);
         block.setVariableValue("__y_position__", newY);
-        canvas.drawPoint(oldX, oldY, canvas.freeSpace);
-        canvas.drawPoint(newX, newY, '@');
+        Canvas.drawPoint(oldX, oldY, Canvas.freeSpace);
+        Canvas.drawPoint(newX, newY, '@');
     }
 }
