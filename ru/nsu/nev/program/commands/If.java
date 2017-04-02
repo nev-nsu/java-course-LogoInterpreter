@@ -10,7 +10,7 @@ import ru.nsu.nev.program.blocks.conditional.IfBlock;
 
 public class If implements Command {
 
-    FunctionalBlock newBlock;
+    private FunctionalBlock newBlock;
 
     @Override
     public void onRead(FunctionalBlock placement) throws SyntaxError, LogicalError {

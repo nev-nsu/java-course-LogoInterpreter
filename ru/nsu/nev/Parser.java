@@ -24,13 +24,13 @@ import java.util.Stack;
 public class Parser {
 
     private static int numberOfLine = 0;
-    public static int getNumberOfLine(){
-        return numberOfLine;
-    }
-
     private static BufferedReader input;
     private static String[] words;
     private static int currentWord;
+
+    public static int getNumberOfLine() {
+        return numberOfLine;
+    }
 
     public static void init(String inputFileName) {
         try {
@@ -49,24 +49,20 @@ public class Parser {
 
     public static Command getCommand(boolean strictly) throws SyntaxError {
         String cmd_name = getNextWord();
-        Command cmd = CommandsFactory.create (cmd_name);
+        Command cmd = CommandsFactory.create(cmd_name);
         if (cmd == null && strictly)
-            throw new SyntaxError ("command \"" + cmd_name + "\" doesn't exist");
+            throw new SyntaxError("command \"" + cmd_name + "\" doesn't exist");
         return cmd;
     }
 
-    private enum TOKEN_TYPE {
-        OPERATOR, OPEN_BRACKET, CLOSE_BRACKET, PRIMITIVE
-    }
-
-    private static void tryTransition (TOKEN_TYPE state, TOKEN_TYPE newState) throws SyntaxError {
-        switch (newState){
+    private static void tryTransition(TOKEN_TYPE state, TOKEN_TYPE newState) throws SyntaxError {
+        switch (newState) {
             case OPERATOR:
                 if (state == TOKEN_TYPE.PRIMITIVE || state == TOKEN_TYPE.CLOSE_BRACKET)
                     return;
             case OPEN_BRACKET:
-                 if ((state == TOKEN_TYPE.OPERATOR) || (state == TOKEN_TYPE.OPEN_BRACKET))
-                     return;
+                if ((state == TOKEN_TYPE.OPERATOR) || (state == TOKEN_TYPE.OPEN_BRACKET))
+                    return;
             case CLOSE_BRACKET:
                 if ((state == TOKEN_TYPE.PRIMITIVE) || (state == TOKEN_TYPE.CLOSE_BRACKET))
                     return;
@@ -75,11 +71,11 @@ public class Parser {
                     return;
             default:
         }
-        throw new SyntaxError("incorrect expression");                             
+        throw new SyntaxError("incorrect expression");
     }
 
     public static Expression getExpression(FunctionalBlock placement) throws SyntaxError {
-        // Reverse Polish notation :(
+        // Reverse Polish notation
         ArrayList<Primitive> objects = new ArrayList<>();
         ArrayList<BinaryOperator> subjects = new ArrayList<>();
         Stack<Priority> stack = new Stack<>();
@@ -92,7 +88,7 @@ public class Parser {
                 new_state = TOKEN_TYPE.OPERATOR;
                 if (stack.empty() || stack.lastElement().getClass() == Bracket.class)
                     stack.push(operator);
-                else{
+                else {
                     if (stack.lastElement().getPriority() >= operator.getPriority())
                         subjects.add((BinaryOperator) stack.pop());
                     stack.push(operator);
@@ -115,8 +111,8 @@ public class Parser {
                             new_state = TOKEN_TYPE.CLOSE_BRACKET;
                             try {
                                 Priority element = stack.pop();
-                                while (element.getClass() != Bracket.class){
-                                    subjects.add((BinaryOperator)element);
+                                while (element.getClass() != Bracket.class) {
+                                    subjects.add((BinaryOperator) element);
                                     objects.add(null);
                                     element = stack.pop();
                                 }
@@ -124,13 +120,12 @@ public class Parser {
                                 throw new SyntaxError("incorrect expression");
                             }
                         } else {
-                            while (!stack.empty()){
+                            while (!stack.empty()) {
                                 Priority element = stack.pop();
                                 if (element.getClass() != Bracket.class) {
                                     subjects.add((BinaryOperator) element);
                                     objects.add(null);
-                                }
-                                else
+                                } else
                                     throw new SyntaxError("incorrect expression");
                             }
                             if (objects.isEmpty())
@@ -139,7 +134,7 @@ public class Parser {
                         }
                     }
                 }
-                // Primitive onRead
+                // Primitive handler
                 if (primitive != null) {
                     new_state = TOKEN_TYPE.PRIMITIVE;
                     objects.add(primitive);
@@ -150,35 +145,33 @@ public class Parser {
         }
     }
 
-    public static BinaryOperator getOperator (){
+    public static BinaryOperator getOperator() {
         BinaryOperator res = OperatorsFactory.create(getNextWord());
         if (res == null)
             currentWord--;
         return res;
     }
 
-    private static Integer getNumber(){
+    private static Integer getNumber() {
         String word = getNextWord();
         Integer res;
         try {
             res = Integer.valueOf(word);
-        }
-        catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             currentWord--;
             return null;
         }
         return res;
     }
 
-    public static String getName (){
+    public static String getName() {
         try {
             Command test = getCommand(false);
             currentWord--;
             if (test != null) {
                 return null;
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             Interpreter.logger.fatal("internal error");
             System.exit(1);
         }
@@ -191,21 +184,21 @@ public class Parser {
         return word;
     }
 
-    public static boolean skipWord (String needed_word, boolean strictly) throws SyntaxError {
+    public static boolean skipWord(String needed_word, boolean strictly) throws SyntaxError {
         String word = getNextWord();
         if (needed_word.equals(word))
             return true;
         if (strictly)
-            throw new SyntaxError (needed_word + " expected");
+            throw new SyntaxError(needed_word + " expected");
         currentWord--;
         return false;
     }
 
-    public static boolean skipWord (String needed_word) throws SyntaxError {
+    public static boolean skipWord(String needed_word) throws SyntaxError {
         return skipWord(needed_word, false);
     }
 
-    private static void newLine () {
+    private static void newLine() {
         String line = null;
         try {
             numberOfLine++;
@@ -225,9 +218,13 @@ public class Parser {
         }
     }
 
-    private static String getNextWord(){
+    private static String getNextWord() {
         if (currentWord == words.length)
             newLine();
         return words[currentWord++];
+    }
+
+    private enum TOKEN_TYPE {
+        OPERATOR, OPEN_BRACKET, CLOSE_BRACKET, PRIMITIVE
     }
 }

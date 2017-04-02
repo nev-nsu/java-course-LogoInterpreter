@@ -12,7 +12,7 @@ public class CommandsFactory {
 
     private static Properties property = null;
 
-    public static void init (String configurationFileName){
+    public static void init(String configurationFileName) {
         try (InputStream input = getSystemClassLoader().getResourceAsStream(configurationFileName)) {
             property = new Properties();
             property.load(input);
@@ -21,14 +21,13 @@ public class CommandsFactory {
             e.printStackTrace();
             System.exit(0);
         }
-        Interpreter.logger.info ("commands factory has been initialized");
+        Interpreter.logger.info("commands factory has been initialized");
     }
 
-    public static Command create (String name){
+    public static Command create(String name) {
         try {
             Class commandClass = Class.forName(property.getProperty(name), false, getSystemClassLoader());
-            Command cmd = (Command) commandClass.newInstance();
-            return cmd;
+            return (Command) commandClass.newInstance();
         } catch (Exception e) {
             return null;
         }

@@ -11,5 +11,6 @@ public class Then implements Command {
     }
 
     @Override
-    public void onExecute() throws LogicalError, SyntaxError {}
+    public void onExecute() throws LogicalError, SyntaxError {
+    }
 }

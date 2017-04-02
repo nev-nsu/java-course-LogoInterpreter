@@ -5,10 +5,11 @@ import ru.nsu.nev.program.FunctionalBlock;
 import ru.nsu.nev.program.LogicalError;
 import ru.nsu.nev.program.SyntaxError;
 
-public class Ward implements Command{
+public class Ward implements Command {
 
     @Override
-    public void onRead(FunctionalBlock placement) throws SyntaxError {}
+    public void onRead(FunctionalBlock placement) throws SyntaxError {
+    }
 
     @Override
     public void onExecute() throws LogicalError, SyntaxError {

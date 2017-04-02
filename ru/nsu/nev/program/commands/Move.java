@@ -36,7 +36,7 @@ public class Move implements Command {
         int y_limit = Canvas.getHeight() - 1;
         boolean draw_mode = block.getVariableValue("__draw_mode__") == 1;
         Canvas.drawPoint(X, Y, Canvas.freeSpace);
-        while (i > 0){
+        while (i > 0) {
             i--;
             if (draw_mode) Canvas.drawPoint(X, Y, '*');
             switch (direction) {

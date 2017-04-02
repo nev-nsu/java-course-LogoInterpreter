@@ -8,13 +8,13 @@ import ru.nsu.nev.program.SyntaxError;
 
 public class WhileBlock extends IfBlock {
 
-    public WhileBlock (FunctionalBlock nparent, Expression ncondition){
+    public WhileBlock(FunctionalBlock nparent, Expression ncondition) {
         super(nparent, ncondition);
     }
 
     @Override
-    public void execute () throws LogicalError, SyntaxError {
-        if (condition == null){
+    public void execute() throws LogicalError, SyntaxError {
+        if (condition == null) {
             Interpreter.logger.fatal("internal error");
             System.exit(1);
         }

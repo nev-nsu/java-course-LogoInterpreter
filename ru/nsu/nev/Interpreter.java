@@ -2,13 +2,14 @@ package ru.nsu.nev;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import ru.nsu.nev.program.FunctionalBlock;
 import ru.nsu.nev.program.LogicalError;
 import ru.nsu.nev.program.SyntaxError;
 import ru.nsu.nev.program.commands.Command;
-import ru.nsu.nev.program.FunctionalBlock;
 import ru.nsu.nev.program.commands.CommandsFactory;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 import static java.lang.ClassLoader.getSystemClassLoader;
@@ -16,7 +17,7 @@ import static java.lang.ClassLoader.getSystemClassLoader;
 
 public class Interpreter {
 
-    public static final FunctionalBlock mainBlock = new FunctionalBlock(true);
+    public static final FunctionalBlock mainBlock = new FunctionalBlock(true, null);
 
     public static final Logger logger = Logger.getLogger(Interpreter.class);
 

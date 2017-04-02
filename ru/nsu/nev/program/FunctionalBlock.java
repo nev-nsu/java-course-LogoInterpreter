@@ -1,6 +1,5 @@
 package ru.nsu.nev.program;
 
-import ru.nsu.nev.Interpreter;
 import ru.nsu.nev.program.commands.Command;
 
 import java.util.ArrayList;
@@ -8,41 +7,37 @@ import java.util.List;
 
 public class FunctionalBlock {
 
-    public Boolean isImmediatelyExecute;
-    public Boolean isFinished = false;
+    public final boolean isImmediatelyExecute;
+    public boolean isFinished = false;
 
-    private List<Command> commands = new ArrayList<>();
+    private final List<Command> commands = new ArrayList<>();
     private List<Variable> variables = new ArrayList<>();
-    private FunctionalBlock parent = null;
+    private final FunctionalBlock parent;
 
-    public FunctionalBlock (Boolean immediately, FunctionalBlock nparent){
-        this (immediately);
+    public FunctionalBlock(boolean immediately, FunctionalBlock nparent) {
+        isImmediatelyExecute = immediately;
         parent = nparent;
     }
 
-    public FunctionalBlock (Boolean immediately){
-        isImmediatelyExecute = immediately;
-    }
-
-    public void execute () throws LogicalError, SyntaxError {
+    public void execute() throws LogicalError, SyntaxError {
         for (Command c : commands) {
             c.onExecute();
         }
         variables = new ArrayList<>();
     }
 
-    public void addCommand (Command cmd){
+    public void addCommand(Command cmd) {
         commands.add(cmd);
     }
 
-    public void addVariable (Variable var) throws LogicalError {
+    public void addVariable(Variable var) throws LogicalError {
         for (Variable v : variables)
             if (v.getName().equals(var.getName()))
-                throw new LogicalError("variable \"" +var.getValue() + "\" already exists");
+                throw new LogicalError("variable \"" + var.getValue() + "\" already exists");
         variables.add(var);
     }
 
-    private Variable getVarByName (String name){
+    private Variable getVarByName(String name) {
         FunctionalBlock block = this;
         while (block != null) {
             for (Variable var : block.variables)
@@ -53,17 +48,17 @@ public class FunctionalBlock {
         return null;
     }
 
-    public Integer getVariableValue (String name){
+    public Integer getVariableValue(String name) {
         Variable var = getVarByName(name);
         if (var == null)
             return null;
         return var.getValue();
     }
 
-    public void setVariableValue (String name, int value) throws SyntaxError {
+    public void setVariableValue(String name, int value) throws SyntaxError {
         Variable var = getVarByName(name);
         if (var == null)
-            throw new SyntaxError("variable "+name+" doesn't exist");
+            throw new SyntaxError("variable " + name + " doesn't exist");
         var.setValue(value);
     }
 }
