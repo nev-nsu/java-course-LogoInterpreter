@@ -1,5 +1,8 @@
 package logo.program.primitives;
 
+/**
+ * Decimal number
+ */
 public class Number implements Primitive {
 
     private final int num;

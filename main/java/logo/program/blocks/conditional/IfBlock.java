@@ -6,6 +6,10 @@ import logo.program.FunctionalBlock;
 import logo.program.LogicalError;
 import logo.program.SyntaxError;
 
+/**
+ * One-time executed conditional block.
+ * Execute if conditional evaluates into nonzero value.
+ */
 public class IfBlock extends FunctionalBlock {
     protected final Expression condition;
 

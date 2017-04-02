@@ -8,7 +8,7 @@ import logo.program.LogicalError;
 import logo.program.SyntaxError;
 import logo.program.blocks.conditional.WhileBlock;
 
-public class While implements Command {
+class While implements Command {
 
     private FunctionalBlock newBlock;
 

@@ -6,7 +6,7 @@ import logo.program.LogicalError;
 import logo.program.SyntaxError;
 import logo.program.Variable;
 
-public class DefineVariable implements Command {
+class DefineVariable implements Command {
 
     private String variableName;
     private FunctionalBlock block;

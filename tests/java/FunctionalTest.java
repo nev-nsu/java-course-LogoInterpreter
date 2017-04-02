@@ -12,7 +12,7 @@ import java.io.InputStreamReader;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class FunctionalTest {
+class FunctionalTest {
 
     static {
         CommandsFactory.init("test_standart_commands.properties");
@@ -24,7 +24,7 @@ public class FunctionalTest {
             for (int i = 1; i <= 4; i++) {
                 Parser.init("src/tests/logo/test_" + i + "_in.logo");
                 FunctionalBlock block = new FunctionalBlock(true, Interpreter.mainBlock);
-                Canvas.clean();
+                Canvas.cleanField();
                 Interpreter.readFunctionalBlock(block);
                 String[] out = Canvas.getField();
                 BufferedReader rightOut = new BufferedReader(new InputStreamReader(new FileInputStream(

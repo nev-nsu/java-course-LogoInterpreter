@@ -3,6 +3,9 @@ package logo.program;
 import logo.Interpreter;
 import logo.Parser;
 
+/**
+ * Calls as a result of parsing failure.
+ */
 public class SyntaxError extends Exception {
 
     public SyntaxError(String description) {

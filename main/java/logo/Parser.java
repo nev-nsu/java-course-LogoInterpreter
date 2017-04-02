@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.Stack;
 
+/**
+ * Allow to works with semantic units, by realizing all low-level IO operations
+ */
 public class Parser {
 
     private static int numberOfLine = 0;
@@ -28,10 +31,17 @@ public class Parser {
     private static String[] words;
     private static int currentWord;
 
+    /**
+     * How many lines was already read
+     */
     public static int getNumberOfLine() {
         return numberOfLine;
     }
 
+    /**
+     * @param inputFileName name of the file with logo-program
+     * @throws SyntaxError in case of empty file
+     */
     public static void init(String inputFileName) throws SyntaxError {
         try {
             input = new BufferedReader(new InputStreamReader(new FileInputStream(inputFileName), "UTF-8"));
@@ -48,6 +58,14 @@ public class Parser {
         return getCommand(true);
     }
 
+    /**
+     * Try to read a command from the input
+     *
+     * @param strictly If 'true' then failure will cause SyntaxError. default value = 'true'
+     * @return read Command if success, null in the other case
+     * @throws SyntaxError if getting failed and strictly == 'true', or if end of the file was reached
+     * @see logo.program.commands.Command
+     */
     public static Command getCommand(boolean strictly) throws SyntaxError {
         String cmd_name = getNextWord();
         Command cmd = CommandsFactory.create(cmd_name);
@@ -75,6 +93,12 @@ public class Parser {
         throw new SyntaxError("incorrect expression");
     }
 
+    /**
+     * Try to read an expression using reverse Polish notation.
+     * @param placement functional block in which context expression will be calculate
+     * @throws SyntaxError if there no expression in input stream, or if end of the file was reached
+     * @see Expression
+     */
     public static Expression getExpression(FunctionalBlock placement) throws SyntaxError {
         // Reverse Polish notation
         ArrayList<Primitive> objects = new ArrayList<>();
@@ -148,6 +172,11 @@ public class Parser {
         }
     }
 
+    /**
+     * Try to read an operator
+     * @return BinaryOperator if reading was successfully, else 'null'
+     * @throws SyntaxError if end of the file was reached
+     */
     public static BinaryOperator getOperator() throws SyntaxError {
         BinaryOperator res = OperatorsFactory.create(getNextWord());
         if (res == null)
@@ -155,6 +184,11 @@ public class Parser {
         return res;
     }
 
+    /**
+     * Try to read a decimal number
+     * @return Integer if reading was successfully, else 'null'
+     * @throws SyntaxError if end of the file was reached
+     */
     private static Integer getNumber() throws SyntaxError {
         String word = getNextWord();
         Integer res;
@@ -167,6 +201,11 @@ public class Parser {
         return res;
     }
 
+    /**
+     * Try to read a name of a variable. Distinguish the name from a command.
+     * @return String if reading was successfully, else 'null'
+     * @throws SyntaxError if end of the file was reached
+     */
     public static String getName() throws SyntaxError {
         try {
             Command test = getCommand(false);
@@ -187,12 +226,17 @@ public class Parser {
         return word;
     }
 
-    public static boolean skipWord(String needed_word, boolean strictly) throws SyntaxError {
+    /**
+     * @param strictly If 'true' then failure will cause SyntaxError. default value = 'false'
+     * @return if skipping was successfully
+     * @throws SyntaxError if skipping failed and strictly == 'true', or if end of the file was reached
+     */
+    public static boolean skipWord(String skipping_word, boolean strictly) throws SyntaxError {
         String word = getNextWord();
-        if (needed_word.equals(word))
+        if (skipping_word.equals(word))
             return true;
         if (strictly)
-            throw new SyntaxError(needed_word + " expected");
+            throw new SyntaxError(skipping_word + " expected");
         currentWord--;
         return false;
     }

@@ -8,7 +8,7 @@ import logo.program.FunctionalBlock;
 import logo.program.LogicalError;
 import logo.program.SyntaxError;
 
-public class Move implements Command {
+class Move implements Command {
 
     private char direction = '\0';
     private Expression offset;

@@ -8,7 +8,7 @@ import logo.program.LogicalError;
 import logo.program.SyntaxError;
 import logo.program.blocks.conditional.IfBlock;
 
-public class If implements Command {
+class If implements Command {
 
     private FunctionalBlock newBlock;
 

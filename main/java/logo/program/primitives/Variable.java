@@ -3,6 +3,9 @@ package logo.program.primitives;
 import logo.program.FunctionalBlock;
 import logo.program.SyntaxError;
 
+/**
+ * Mask object for deferred execution, which can get value of real Variable.
+ */
 public class Variable implements Primitive {
 
     private final String name;

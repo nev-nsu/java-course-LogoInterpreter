@@ -6,6 +6,9 @@ import logo.Interpreter;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Create an operator by it's one-symbol signature.
+ */
 public class OperatorsFactory {
     // well, maybe i should do interface "operator" and create realization "binaryOperator" and "unitaryOperator"
     // but i don't think thar unitary operators are really necessary
@@ -20,6 +23,9 @@ public class OperatorsFactory {
         }
     };
 
+    /**
+     * @return Command, if the command is exist, else 'null'
+     */
     public static BinaryOperator create(String signature) {
         try {
             Class operatorClass = table.get(signature);

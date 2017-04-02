@@ -4,7 +4,7 @@ import logo.program.FunctionalBlock;
 import logo.program.LogicalError;
 import logo.program.SyntaxError;
 
-public class Then implements Command {
+class Then implements Command {
     @Override
     public void onRead(FunctionalBlock placement) throws SyntaxError {
         throw new SyntaxError("condition needed");

@@ -5,7 +5,7 @@ import logo.Interpreter;
 import logo.Parser;
 import logo.program.*;
 
-public class Init implements Command {
+class Init implements Command {
 
     private Expression width = null;
     private Expression height = null;
@@ -35,7 +35,7 @@ public class Init implements Command {
             block.addVariable(new Variable("__x_position__"));
             block.addVariable(new Variable("__y_position__"));
         }
-        Canvas.setSize(width.calculate(), height.calculate());
+        Canvas.setFieldSize(width.calculate(), height.calculate());
         Canvas.setMinSize(X + 1, Y + 1);
         block.setVariableValue("__x_position__", X);
         block.setVariableValue("__y_position__", Y);

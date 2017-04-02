@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class CrashFunctionalTest {
+class CrashFunctionalTest {
 
     static {
         CommandsFactory.init("test_standart_commands.properties");

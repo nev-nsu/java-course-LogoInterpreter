@@ -6,6 +6,10 @@ import logo.program.FunctionalBlock;
 import logo.program.LogicalError;
 import logo.program.SyntaxError;
 
+/**
+ * Loop with precondition.
+ * Execute while conditional evaluates into nonzero value.
+ */
 public class WhileBlock extends IfBlock {
 
     public WhileBlock(FunctionalBlock nparent, Expression ncondition) {

@@ -5,7 +5,7 @@ import logo.program.FunctionalBlock;
 import logo.program.LogicalError;
 import logo.program.SyntaxError;
 
-public class Draw implements Command {
+class Draw implements Command {
 
     @Override
     public void onRead(FunctionalBlock placement) throws SyntaxError {

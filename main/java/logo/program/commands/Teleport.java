@@ -8,7 +8,7 @@ import logo.program.FunctionalBlock;
 import logo.program.LogicalError;
 import logo.program.SyntaxError;
 
-public class Teleport implements Command {
+class Teleport implements Command {
 
     private Expression X, Y;
 

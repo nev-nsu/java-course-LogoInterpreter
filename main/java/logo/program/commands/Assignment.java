@@ -6,7 +6,7 @@ import logo.program.FunctionalBlock;
 import logo.program.LogicalError;
 import logo.program.SyntaxError;
 
-public class Assignment implements Command {
+class Assignment implements Command {
 
     private String variableName;
     private Expression newValue;
