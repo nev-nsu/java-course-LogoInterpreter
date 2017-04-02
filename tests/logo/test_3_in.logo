@@ -1,0 +1,9 @@
+init 5, 5, 0, 0
+draw
+define a
+set a 0
+while a - 4 {
+    set a a + 1
+    teleport a, a
+}
+exit

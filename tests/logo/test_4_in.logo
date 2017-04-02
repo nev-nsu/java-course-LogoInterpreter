@@ -1,0 +1,13 @@
+init 10, 10, 0, 0
+draw
+define a
+set a 9
+while a {
+    if (a - 2*(a/2)){
+        move D a
+        move U a
+    }
+    move R 1
+    set a a - 1
+}
+exit

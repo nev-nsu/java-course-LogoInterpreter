@@ -1,0 +1,26 @@
+init 16, 16, 0, 0
+ward
+define x
+set x 0
+while (x-16) {
+    define y
+    set y 0
+    while (y-16){
+        define color
+        set color x+y
+        if (color - 2*(color/2)){
+            draw
+            move D 1
+            ward
+        }
+        if (color -2*(color/2) -1) {
+            ward
+            move D 1
+            draw
+        }
+        set y y+1
+    }
+    set x x+1
+    if (x - 16) {teleport x,0}
+}
+exit
